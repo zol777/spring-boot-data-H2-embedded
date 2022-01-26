@@ -48,13 +48,19 @@ public class EmployeeController {
         Employee newEmployee = new Employee();
         newEmployee.setId(3);
         newEmployee.setName("Mary");
+        employeeRepository.save(newEmployee);
 
         employeeList.stream().forEach(employee -> {
             System.out.println(ReflectionToStringBuilder.toString(employee));
         });
 
-        System.out.println("Duplicate employee"+
+/*        System.out.println("Duplicate employee"+
                 ReflectionToStringBuilder.toString(employeeRepository.findByName("Mary")));
+
+ */
+        System.out.println("Duplicate employee"+
+                ReflectionToStringBuilder.toString(employeeRepository.findOneByName("Mary")));
+
     }
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
