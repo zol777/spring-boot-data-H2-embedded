@@ -1,11 +1,13 @@
 package com.iamvickyav.springboot.SpringBootRestWithH2;
 
 import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 
 import com.iamvickyav.springboot.SpringBootRestWithH2.model.Employee;
 import com.iamvickyav.springboot.SpringBootRestWithH2.service.EmployeeRepository;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -58,8 +60,18 @@ public class EmployeeController {
                 ReflectionToStringBuilder.toString(employeeRepository.findByName("Mary")));
 
  */
-        System.out.println("Duplicate employee"+
-                ReflectionToStringBuilder.toString(employeeRepository.findOneByName("Mary")));
+
+        try {
+            System.out.println("Duplicate employee" +
+                    ReflectionToStringBuilder.toString(employeeRepository.findOneByName("Mary")));
+        } catch (NonUniqueResultException e ){
+          System.out.println("a:"+e);
+        } catch (IncorrectResultSizeDataAccessException e) {
+            System.out.println("b:"+e);
+        } catch (Exception e) {
+            System.out.println("c:"+e);
+
+        }
 
     }
 
